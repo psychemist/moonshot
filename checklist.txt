@@ -1,0 +1,10 @@
+Submission checklist:
+- Public GitHub repo
+- PRODUCT_BRIEF.md naming one real user
+- CAPSTONE_SPEC.md with checkable criteria
+- AGENTS.md with your rules
+- One working vertical slice, with tests
+- A skill or MCP server if you need data or routines
+- README with "Built with Codex"
+- DEMO_SCRIPT.md, rehearsed with fallbacks
+- No keys anywhere in the repo
