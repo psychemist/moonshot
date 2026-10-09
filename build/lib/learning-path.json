@@ -1,0 +1,413 @@
+{
+  "goal": "build a Hack assembler in C",
+  "aliases": [
+    "build an assembler in C",
+    "Hack assembler"
+  ],
+  "nodes": [
+    {
+      "id": "c-essentials",
+      "title": "C essentials",
+      "kind": "concept",
+      "description": "Write, compile, and run a small C program."
+    },
+    {
+      "id": "text-parsing",
+      "title": "Text parsing",
+      "kind": "concept",
+      "description": "Separate program instructions from comments and blank lines."
+    },
+    {
+      "id": "binary-representation",
+      "title": "Binary representation",
+      "kind": "concept",
+      "description": "Understand how numbers become fixed-width sequences of bits."
+    },
+    {
+      "id": "hack-instructions",
+      "title": "Hack instructions",
+      "kind": "concept",
+      "description": "Recognize the address and computation forms of the Hack language."
+    },
+    {
+      "id": "c-strings",
+      "title": "C strings & arrays",
+      "kind": "concept",
+      "description": "Work with character buffers, string boundaries, and simple comparisons."
+    },
+    {
+      "id": "file-io",
+      "title": "File input & output",
+      "kind": "concept",
+      "description": "Read a source file and write a clean output file."
+    },
+    {
+      "id": "instruction-encoding",
+      "title": "Instruction encoding",
+      "kind": "concept",
+      "description": "Translate valid instructions into the bits defined by the Hack specification."
+    },
+    {
+      "id": "symbol-tables",
+      "title": "Symbol tables",
+      "kind": "concept",
+      "description": "Associate names with addresses using a simple table."
+    },
+    {
+      "id": "two-pass-assembly",
+      "title": "Two-pass assembly",
+      "kind": "concept",
+      "description": "Resolve labels first, then translate instructions and allocate variables."
+    },
+    {
+      "id": "error-handling",
+      "title": "Error handling",
+      "kind": "concept",
+      "description": "Explain invalid input with a useful message and source line number."
+    },
+    {
+      "id": "testing",
+      "title": "Testing & comparison",
+      "kind": "concept",
+      "description": "Compare your output against the reference assembler."
+    },
+    {
+      "id": "assembler-integration",
+      "title": "Assembling the pieces",
+      "kind": "concept",
+      "description": "Join parsing, translation, symbols, and file handling into one command."
+    },
+    {
+      "id": "hack-assembler",
+      "title": "Hack assembler",
+      "kind": "project",
+      "description": "Build a command-line assembler that translates Hack assembly into matching .hack output. Validate it against the official reference tool."
+    }
+  ],
+  "edges": [
+    {
+      "from": "c-essentials",
+      "to": "text-parsing",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "c-essentials",
+      "to": "c-strings",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "c-essentials",
+      "to": "file-io",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "binary-representation",
+      "to": "hack-instructions",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "hack-instructions",
+      "to": "instruction-encoding",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "text-parsing",
+      "to": "instruction-encoding",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "c-strings",
+      "to": "symbol-tables",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "hack-instructions",
+      "to": "symbol-tables",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "symbol-tables",
+      "to": "two-pass-assembly",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "instruction-encoding",
+      "to": "two-pass-assembly",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "file-io",
+      "to": "two-pass-assembly",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "text-parsing",
+      "to": "error-handling",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "hack-instructions",
+      "to": "error-handling",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "instruction-encoding",
+      "to": "testing",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "error-handling",
+      "to": "testing",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "two-pass-assembly",
+      "to": "assembler-integration",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "testing",
+      "to": "assembler-integration",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "assembler-integration",
+      "to": "hack-assembler",
+      "relation": "prerequisite"
+    },
+    {
+      "from": "c-strings",
+      "to": "text-parsing",
+      "relation": "useful_for"
+    },
+    {
+      "from": "file-io",
+      "to": "text-parsing",
+      "relation": "useful_for"
+    }
+  ],
+  "resources": [
+    {
+      "id": "gnu-c",
+      "title": "GNU C Language Introduction and Reference Manual",
+      "provider": "GNU Project",
+      "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html",
+      "conceptIds": [
+        "c-essentials"
+      ],
+      "reviewedOn": "2026-10-14"
+    },
+    {
+      "id": "nand-project-6",
+      "title": "Project 6: The Assembler",
+      "provider": "Nand2Tetris",
+      "url": "https://www.nand2tetris.org/project06",
+      "conceptIds": [
+        "text-parsing",
+        "instruction-encoding",
+        "two-pass-assembly",
+        "assembler-integration",
+        "hack-assembler"
+      ],
+      "reviewedOn": "2026-10-14"
+    },
+    {
+      "id": "nand-project-4",
+      "title": "Project 4: Machine Language Programming",
+      "provider": "Nand2Tetris",
+      "url": "https://www.nand2tetris.org/project04",
+      "conceptIds": [
+        "binary-representation",
+        "hack-instructions"
+      ],
+      "reviewedOn": "2026-10-14"
+    },
+    {
+      "id": "gnu-strings",
+      "title": "Strings in C",
+      "provider": "GNU Project",
+      "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Strings.html",
+      "conceptIds": [
+        "c-strings",
+        "text-parsing"
+      ],
+      "reviewedOn": "2026-10-14"
+    },
+    {
+      "id": "gnu-arrays",
+      "title": "Arrays in C",
+      "provider": "GNU Project",
+      "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Arrays.html",
+      "conceptIds": [
+        "c-strings",
+        "symbol-tables"
+      ],
+      "reviewedOn": "2026-10-14"
+    },
+    {
+      "id": "gnu-structures",
+      "title": "Structures in C",
+      "provider": "GNU Project",
+      "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Structures.html",
+      "conceptIds": [
+        "symbol-tables"
+      ],
+      "reviewedOn": "2026-10-14"
+    },
+    {
+      "id": "gnu-libc",
+      "title": "GNU C Library Reference Manual",
+      "provider": "GNU Project",
+      "url": "https://www.gnu.org/software/libc/manual/html_node/index.html",
+      "conceptIds": [
+        "file-io",
+        "error-handling"
+      ],
+      "reviewedOn": "2026-10-14"
+    },
+    {
+      "id": "nand-software",
+      "title": "Nand2Tetris tools and reference assembler",
+      "provider": "Nand2Tetris",
+      "url": "https://www.nand2tetris.org/software",
+      "conceptIds": [
+        "testing",
+        "assembler-integration",
+        "hack-assembler"
+      ],
+      "reviewedOn": "2026-10-14"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "write-first-c-program",
+      "conceptId": "c-essentials",
+      "title": "Make your first C program run",
+      "exercise": "Write a small C program that stores the integers 2 and 3, adds them, and prints the result. Compile it with a C compiler and run it yourself.",
+      "expectedOutput": "Your program compiles successfully and prints 5 when you run it. Keep the source file and a note of the command you used.",
+      "estimatedMinutes": 60,
+      "resourceId": "gnu-c",
+      "explanation": "Your assembler will be written in C. Getting a small program to compile and run gives you a starting point before handling text input. Python and JavaScript experience helps, but does not establish familiarity with C."
+    },
+    {
+      "id": "identify-hack-instructions",
+      "conceptId": "text-parsing",
+      "title": "Find the instructions in the noise",
+      "exercise": "Create a small Hack assembly input containing @2, D=A, and @3 on separate lines. Add blank lines, full-line comments, and an inline comment. Write a C program that reads the input and emits only the instructions, in their original order.",
+      "expectedOutput": "An ordered list containing @2, D=A, and @3. Blank lines and comments are excluded, including the comment after an instruction.",
+      "estimatedMinutes": 90,
+      "resourceId": "nand-project-6",
+      "explanation": "You marked C essentials as prior knowledge, so the introductory C task is skipped. An assembler needs to identify instructions before translating them. Practise that small step before tackling the complete project."
+    },
+    {
+      "id": "practise-binary-representation",
+      "conceptId": "binary-representation",
+      "title": "Put numbers into bits",
+      "estimatedMinutes": 45,
+      "resourceId": "nand-project-4",
+      "exercise": "Convert 0, 2, and 32767 to sixteen-bit binary representations. Explain which part of an address instruction holds its numeric value.",
+      "expectedOutput": "Three fixed-width binary representations and a short explanation of an address instruction.",
+      "explanation": "Encoding requires understanding fixed-width bits before translating the Hack language."
+    },
+    {
+      "id": "practise-hack-instructions",
+      "conceptId": "hack-instructions",
+      "title": "Recognize the two instruction forms",
+      "estimatedMinutes": 60,
+      "resourceId": "nand-project-4",
+      "exercise": "Read the official Hack language reference. Classify a small set of address and computation instructions and identify their fields.",
+      "expectedOutput": "A labelled set of examples distinguishing addresses from computation, destination, and jump fields.",
+      "explanation": "You need to identify each instruction form before assigning its binary fields."
+    },
+    {
+      "id": "practise-c-strings",
+      "conceptId": "c-strings",
+      "title": "Handle text without losing its boundaries",
+      "estimatedMinutes": 60,
+      "resourceId": "gnu-strings",
+      "exercise": "Create a character buffer, find its terminating null, and compare two short strings. Explain what happens when the input is too long for the buffer.",
+      "expectedOutput": "A small program and notes demonstrating string length, comparison, and a safe length limit.",
+      "explanation": "Strings and arrays help represent names safely. They support text parsing but are not an extra blocker for the first parsing exercise."
+    },
+    {
+      "id": "practise-file-io",
+      "conceptId": "file-io",
+      "title": "Read a file, write a result",
+      "estimatedMinutes": 60,
+      "resourceId": "gnu-libc",
+      "exercise": "Read a small text file one line at a time and write its nonempty lines to a new file. Handle missing files and close opened streams.",
+      "expectedOutput": "An input file, an output file, and a clear failure message when the input cannot be opened.",
+      "explanation": "The final assembler takes an .asm file and produces a .hack file. File handling makes that workflow repeatable."
+    },
+    {
+      "id": "practise-instruction-encoding",
+      "conceptId": "instruction-encoding",
+      "title": "Translate instructions into bits",
+      "estimatedMinutes": 120,
+      "resourceId": "nand-project-6",
+      "exercise": "Using the official Hack specification, implement numeric address translation and lookup tables for computation, destination, and jump fields. Start without symbols.",
+      "expectedOutput": "Tests showing sixteen output bits for each valid instruction, matched against the reference assembler.",
+      "explanation": "This is the first working translation stage. Numeric instructions can be tested before symbol handling is added."
+    },
+    {
+      "id": "practise-symbol-tables",
+      "conceptId": "symbol-tables",
+      "title": "Give names an address",
+      "estimatedMinutes": 90,
+      "resourceId": "gnu-structures",
+      "exercise": "Use a simple array of name/address records. Add a name, look it up, and handle a missing name. Start with a fixed-size table rather than a new data-structure course.",
+      "expectedOutput": "A small table implementation with lookup, insertion, and boundary tests.",
+      "explanation": "A modest symbol table is enough for this project. It connects readable labels and variable names to numeric addresses."
+    },
+    {
+      "id": "practise-two-pass-assembly",
+      "conceptId": "two-pass-assembly",
+      "title": "Resolve names before translating",
+      "estimatedMinutes": 120,
+      "resourceId": "nand-project-6",
+      "exercise": "Extend your translator with a first pass that records label addresses and a second pass that resolves variables and emits instructions. Follow the official symbol rules.",
+      "expectedOutput": "Symbolic test inputs produce the same output as the reference assembler, including forward label references.",
+      "explanation": "Labels may be used before their definitions. Two passes let the assembler resolve them consistently."
+    },
+    {
+      "id": "practise-error-handling",
+      "conceptId": "error-handling",
+      "title": "Make invalid input understandable",
+      "estimatedMinutes": 45,
+      "resourceId": "gnu-libc",
+      "exercise": "Add checks for malformed instructions and file failures. Report a clear reason and the original source line instead of producing misleading output.",
+      "expectedOutput": "Invalid-input cases produce useful messages and a failure exit status.",
+      "explanation": "Good error messages make the assembler easier to debug and prevent invalid output from looking successful."
+    },
+    {
+      "id": "practise-testing",
+      "conceptId": "testing",
+      "title": "Compare with a trusted reference",
+      "estimatedMinutes": 90,
+      "resourceId": "nand-software",
+      "exercise": "Use the official Project 6 test programs. Compare your generated files with output from the reference assembler and record differences. Include numeric and symbolic inputs.",
+      "expectedOutput": "A repeatable comparison procedure with results for the supplied test programs.",
+      "explanation": "Matching a reference provides practical evidence of correct translation; merely reading a resource does not."
+    },
+    {
+      "id": "practise-assembler-integration",
+      "conceptId": "assembler-integration",
+      "title": "Connect the complete command",
+      "estimatedMinutes": 90,
+      "resourceId": "nand-project-6",
+      "exercise": "Join file input, parsing, encoding, symbol handling, and validation behind one command that accepts an .asm path and writes a .hack file.",
+      "expectedOutput": "A reproducible command, output file, and short usage instructions for another person.",
+      "explanation": "Integration brings the separate learning steps together into a useful project."
+    },
+    {
+      "id": "practise-hack-assembler",
+      "conceptId": "hack-assembler",
+      "title": "Demonstrate your assembler",
+      "estimatedMinutes": 60,
+      "resourceId": "nand-project-6",
+      "exercise": "Run the integrated assembler against the official Project 6 programs. Compare output with the reference tool and explain your two-pass design from your own implementation.",
+      "expectedOutput": "Matching outputs, a repeatable validation record, and an explanation of how your assembler works.",
+      "explanation": "This is the project destination. Validation is performed by you; the learning planner does not execute or grade your program."
+    }
+  ]
+}
