@@ -1,0 +1,9 @@
+interface:
+  display_name: "Learning Coach"
+  short_description: "Ground your next study task in a reviewed roadmap"
+  default_prompt: "Use $learning-coach to plan my next study task from my goal, prior knowledge, and weekly time."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "learning-graph"
+      description: "Read-only learning plans and reviewed resource links"
