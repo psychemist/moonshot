@@ -10,16 +10,19 @@ The whole roadmap is visible below the learner form. Select **Your roadmap ↓**
 
 - A complete curated assembler roadmap: 12 concepts, the final project, eight resource entries, and an exercise for every step.
 - Graph and list views with identical step details, prerequisites, optional background, rationale, and resources. Mobile starts with the list; every step is reachable by keyboard.
-- Search, zoom, fit controls, highlighted connections, and session-only familiarity selections directly from step details.
+- Search, zoom, fit controls, highlighted connections, and self-reported familiarity selections directly from step details.
 - A C exercise when C is unfamiliar, or a text-parsing exercise when C essentials is selected as prior knowledge.
 - An exercise, expected output, provisional estimate, source link, and explanation for the next task.
 - Time allocation within the entered weekly budget, including fractional hours, with remaining work identified for later.
+- “Help me start” gives every task a concrete first action and four small practice steps.
+- Optional focus view, budget-capped focus timers, explicit transitions, and pause/break controls.
+- An optional restart note and opt-in device saving; restored sessions wait for you to resume.
 - Inline errors for invalid hours and unsupported goals, with explicit recovery.
 - Keyboard navigation, a mobile layout, and website generation that works offline after the page has loaded.
 - A read-only local MCP server exposing supported goals, the same planner, and concept resource links.
 - A repository `learning-coach` skill that guides a connected assistant to explain tool results at the learner's level, cite sources, and offer hints.
 
-Prior knowledge is **self-reported**. Changing website inputs clears the old result until you regenerate. Nothing is saved across reloads. Coaching runs in the configured assistant; the website has no chat interface.
+Prior knowledge is **self-reported**. Changing website inputs clears the old result until you regenerate. Practice sessions survive reload only when you enable “Keep my place on this device.” Checklist activity never establishes mastery or unlocks prerequisites. Coaching runs in the configured assistant; the website has no chat interface.
 
 ## Quick start
 
@@ -38,7 +41,13 @@ Open [localhost:3000](http://localhost:3000).
 
 **One-minute website demo:** keep the defaults and select **Find my next step**. Show the roadmap and C exercise. Select **C essentials** and regenerate: the task changes to text parsing. Set weekly hours to **0.5** and regenerate: the parsing task receives **30 minutes** this week, with **60 minutes** remaining.
 
-**Explore the full path:** select **Your roadmap ↓**, inspect a node, and switch between Graph and List. Solid lines indicate prerequisites; dashed lines indicate helpful background. Search by concept or description. Select **I already know this** to record session-only familiarity, then regenerate the next task. This does not certify mastery.
+**Explore the full path:** select **Your roadmap ↓**, inspect a node, and switch between Graph and List. Solid lines indicate prerequisites; dashed lines indicate helpful background. Search by concept or description. Select **I already know this** to record familiarity, then regenerate the next task. Selections survive reload only if included in an opted-in saved practice profile. This does not certify mastery.
+
+**Start, pause, return:** generate a plan, then select **Help me start**. Open the practice checklist, or choose **Focus view** to keep one action in view. The optional timer offers 5, 10, and 20 minutes capped to your task allocation, including shorter budgets. Timer expiry offers a choice; it never advances your work. **Take a break** and **Pause session** preserve your current action.
+
+Write **When I return, my next action is…** if useful. **Keep my place on this device** is off by default. Enabling it stores the profile snapshot, task, checklist, timer position, and note in this browser only. A reload restores a paused session. Disabling saving removes that stored session; **Clear saved session** removes it and clears the current practice session. Storage failures are disclosed. Clear saved information before sharing the browser. Changing the profile pauses the earlier session; restore its profile or explicitly replace it rather than transferring its checklist.
+
+These options are available without a diagnosis, account, or health questionnaire. They are research-informed supports to evaluate, not validated treatment or a promise to prevent procrastination.
 
 **Assistant coach:** in another terminal opened in `build/`, launch:
 
@@ -95,7 +104,7 @@ npm run start
 - **Shared planner:** the website and MCP tools import the same pure function. It validates inputs, resolves prerequisites, selects a reachable task, and caps its allocation to the weekly budget.
 - **MCP:** `build/mcp/server.ts` serves three read-only tools over stdio using the official TypeScript SDK. Valid responses include structured JSON and text; invalid schemas or unsupported inputs return errors.
 - **Skill:** `build/.agents/skills/learning-coach/SKILL.md` guides the assistant through profile collection, tool calls, level-appropriate explanations, citations, and hints. It does not grant persistence or reminder capabilities.
-- **State and routines:** website state stays in browser memory. The server writes no learner data, executes no learner code, and makes no network requests. No database or scheduled task is connected.
+- **State and routines:** a versioned practice-session model lives in browser memory, with optional local storage. It is separate from curriculum progress and self-reported familiarity. The server writes no learner data, executes no learner code, and makes no network requests. No database or scheduled task is connected.
 
 | Tool | Inputs | Returns |
 |---|---|---|
@@ -105,6 +114,14 @@ npm run start
 
 Accepted goals are **build a Hack assembler in C**, **build an assembler in C**, and **Hack assembler**, ignoring case and surrounding whitespace. Prior knowledge supports every concept identifier in the catalog, plus `python`, `javascript`, and `basic-calculus`. The form shows four starting selections; other concepts can be marked familiar in the roadmap. MCP clients obtain the complete identifier list from `list_learning_goals`. Other goals require selecting the supported project explicitly.
 
+## Research and accessibility
+
+The support design draws on [W3C cognitive accessibility guidance](https://www.w3.org/WAI/WCAG2/supplemental/objectives/o5-user-focus/), [National Autistic Society organising guidance](https://www.autism.org.uk/advice-and-guidance/behaviour/organising-and-prioritising/all-audiences), and [NICE ADHD environmental modifications](https://www.nice.org.uk/guidance/ng87/chapter/recommendations). These inform small actions, predictable sequences, optional breaks, and reduced distractions; no particular timer duration is prescribed as optimal. Research reviewed on **14 October 2026**.
+
+A [108-person ADHD trial](https://pubmed.ncbi.nlm.nih.gov/40276075/) found improved activation but no significant between-group advantage on procrastination. That clinical intervention does not establish this app's effectiveness. Evaluate the features with learners before claiming benefit.
+
+Keyboard access, roadmap/list equivalence, selected-step announcements, a details shortcut, readable contrast, reduced-motion support, and forced-colours styles are implemented. The timer announces transitions rather than each tick. Accessibility checks target relevant WCAG 2.2 AA requirements; automated checks are not certification. See [ACCESSIBILITY.md](ACCESSIBILITY.md) for results and outstanding manual and user testing.
+
 ## Built with Codex
 
 Codex generated the page, styling, fixture, planner, MCP server, coach skill, configuration, and automated checks. I chose the learning-roadmap vision, approved the assembler prototype and one-week scope, selected the goal-to-next-task demo, and requested the coach/server extension.
@@ -113,13 +130,13 @@ Review caught a browser-test bug: page-wide alert selectors also matched Next.js
 
 ## Limitations and next steps
 
-The prototype allocates one task, not a complete weekly schedule. Its complete curated map covers one assembler project; prerequisite relationships and estimates remain editorial assumptions. It does not assess mastery, execute learner code, save evidence or progress, or schedule reminders.
+The prototype allocates one task, not a complete weekly schedule. Its complete curated map covers one assembler project; prerequisite relationships and estimates remain editorial assumptions. It does not assess mastery, execute learner code, save exercise evidence or curriculum progress, or schedule reminders. Saved practice checklists are personal activity notes, not verified competence.
 
 AI coaching requires a configured assistant and its normal model access. It is not built into the website. There is no hosted HTTP MCP endpoint or automatic installation into ChatGPT web. Protocol tests establish tool behaviour and planner parity, not educational effectiveness or reliable model adherence to the skill.
 
 External resources require internet; offline cold start and offline reload are not guaranteed. Source and assistant availability from a Nigerian network remain unverified. Resources link to originals rather than copying courses or publishing assembler solutions.
 
-Next: validate the path with real learners, complete scheduling, save learner-submitted evidence, implement reminders, and evaluate coaching. The separate build-time curation skill remains proposed.
+Next: validate the path and support options with consenting neurodivergent and visually impaired learners, complete scheduling, save learner-submitted exercise evidence, implement reminders, and evaluate coaching. The separate build-time curation skill remains proposed.
 
 The project planning date is **7 October 2026**, with the planned build on **8–14 October**. Git author and committer dates follow that schedule at the author's request; they are a planning chronology, not evidence of when each file was written. Verification and roadmap source review occurred on **14 October 2026**. The local `prompts/` folder is intentionally excluded from the public repository.
 
