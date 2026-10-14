@@ -4,6 +4,8 @@ Learning Graph helps self-directed learners find a realistic next step toward a 
 Enter your goal, prior knowledge, and weekly study hours to see a roadmap and an actionable task.  
 The prototype supports one assembler-in-C path, with a website and an optional assistant coach.
 
+**Live website:** [moonshot-two-tau.vercel.app](https://moonshot-two-tau.vercel.app).
+
 The whole roadmap is visible below the learner form. Select **Your roadmap ↓** to jump to it. Browser checks capture desktop and mobile screenshots in `build/test-results/`, which is excluded from Git.
 
 ## Features that work today
@@ -98,6 +100,8 @@ npm run start
 ```
 
 ## How it works
+
+The website is deployed directly to Vercel's `idea-lab/moonshot` project. For a later manual deployment, run `vercel link --yes --project moonshot --scope idea-lab` and `vercel deploy --prod --scope idea-lab` from `build/`. Local `.vercel/` settings are excluded from Git. The coach and stdio MCP server continue to run locally; this deployment hosts the website.
 
 - **Interface:** Next.js App Router, React, TypeScript, and plain CSS render the form, roadmap, and task card in `build/app/`.
 - **Data:** bundled JSON supplies 12 concepts, one project, eight resource entries, and 13 original exercises. Resources are links, not fetched course content. Review dates are metadata, not a guarantee of connectivity.
