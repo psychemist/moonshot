@@ -1,65 +1,69 @@
 # Learning Graph — 60-second Moonshot demo
 
-Read only the quoted lines. Actions and fallbacks are presenter notes; use a fallback instead of the corresponding spoken lines if the live demo fails. Ada is an illustrative persona, not an interviewed learner.
+Read only the quoted lines. Actions and fallbacks are presenter notes. Ada is illustrative, not an interviewed learner. Use a fallback instead of the live action if it fails.
 
-Before starting, run the website from `build/` and open it with the default goal, Python/JavaScript/basic-calculus selections, and twelve weekly hours. Leave **C essentials** unchecked. Keep the form and result visible. See [README.md](README.md) for startup instructions. This timed demo shows the website; an optional coach extension follows below.
+Start the website from `build/` using [README.md](README.md). Use the default goal, Python/JavaScript/basic-calculus selections, twelve weekly hours, and C essentials unchecked. Clear any earlier practice session. Keep the form and result visible. Timer use and saving are optional; the timed minute does not require waiting for a timer or reloading.
 
-## 1. The person and their problem · 0–10 seconds
+## 1. The person · 0–10 seconds
 
-**Action:** Point to the learner's starting-point form.
+**Action:** Point to the learner form.
 
-> Imagine Ada, a self-taught learner who knows Python and JavaScript. She has twelve study hours a week, but struggles to decide what to learn next.
+> Imagine Ada, a self-directed learner with Python experience and twelve weekly study hours. She wants practical skills, but deciding where to begin can feel overwhelming.
 
-**Fallback:** Tell Ada's story without the screen; introduce her explicitly as an example learner.
+**Fallback:** Introduce Ada aloud as an example learner.
 
-## 2. The moment it hurts · 10–20 seconds
+## 2. The problem · 10–20 seconds
 
-**Action:** Point to the project goal.
+**Action:** Point to the supported assembler goal.
 
-> She wants to build something in C. Then another prerequisite appears. She opens another online course, and the project gets pushed back again.
+> A roadmap helps, but starting and switching tasks can still be difficult. Learning Graph gives her a small action and a clear place to return.
 
-**Fallback:** Say: “She keeps chasing things she thinks she must learn first, while her project waits.”
+**Fallback:** Say: “Knowing the destination does not always make the first action clear.”
 
-## 3. What I show on screen · 20–30 seconds
+## 3. Goal to roadmap · 20–30 seconds
 
-**Action:** Show the default inputs and select **Find my next step**. Point to the task and select **Explore the whole roadmap ↓** to reveal the complete map.
+**Action:** Select **Find my next step**. Point to the task and the **Explore the whole roadmap** link; briefly reveal the map if pacing allows.
 
-> I enter her assembler goal, existing skills, and weekly hours. Learning Graph shows the full roadmap, one practical exercise, a resource, and why it matters.
+> I enter her goal, existing knowledge, and available time. She gets the complete assembler roadmap, credible resources, and one practical task that fits her budget.
 
-**Fallback:** Describe the full path aloud: C essentials, parsing, instruction encoding, symbol resolution, testing, then the assembler project, with one exercise to start.
+**Fallback:** Describe the twelve concepts and final project, with prerequisites and resource-linked exercises.
 
-## 4. The wow moment · 30–40 seconds
+## 4. Start, pause, return · 30–40 seconds
 
-**Action:** Return to the form, select **C essentials**, set weekly hours to **0.5**, and select **Find my next step** again. Point to the changed task and thirty-minute allocation.
+**Action:** Select **Help me start**, then **Focus view**. Show the starting action and use **Pause session**, then **Resume session**. No timer is necessary.
 
-> Now I select C essentials. The task changes to reading instructions from a file. With only half an hour available this week, only thirty minutes are allocated.
+> Help me start turns that task into small steps. Focus view shows one action. She can pause, take a break, and resume when she chooses.
 
-**Fallback:** Say: “Knowing C skips the introduction; a half-hour budget reserves thirty minutes for the next exercise.”
+**Fallback:** Say: “The first action is creating a practice folder and an empty file. The learner controls when to continue.”
 
-## 5. How Codex helped · 40–50 seconds
+## 5. How it was built · 40–50 seconds
 
-**Action:** Leave the result visible while explaining the build.
+**Action:** Leave the session visible.
 
-> Codex built the page and tests. We added a coach skill and local tools for a connected AI assistant. Website planning still works without a model.
+> Codex helped build and test this. A connected coach uses the same planner. Support options are research-informed; their usefulness still needs testing with learners.
 
-**Fallback:** Say: “Codex generated the planner and checks. A connected assistant can use its plans through our local tools.”
+**Fallback:** Explain that the website works without a model and the local tools ground assistant coaching.
 
-## 6. What is next · 50–60 seconds
+## 6. Accessibility commitment · 50–60 seconds
 
-**Action:** Address the judges. Describe the next steps as future work.
+**Action:** Address the judges. Distinguish implemented checks from future user testing.
 
-> Next, I want to validate the roadmap, save progress, and add reminders. The aim is clear educational guidance that helps more learners keep going.
+> I will keep making this accessible for visually impaired learners, with screen-reader support, readable contrast, and testing with people who use those tools.
 
-**Fallback:** Say: “Saved progress and reminders are next. Today, the prototype gives a useful starting task for one project.”
+**Fallback:** State the same commitment without claiming that screen-reader or user testing is complete.
 
 ## Timing and rehearsal
 
-The spoken script is approximately 150 words. Target 150 words per minute, with each action happening while you speak. Rehearse aloud with a timer; this document's duration is an estimate, not a claim of a completed timed rehearsal. The preview recommends a task; it does not build or assess the learner's project.
+The spoken lines are approximately 150 words. The sixty-second duration is a target, not a completed timed rehearsal. Rehearse aloud and simplify pointing/scrolling as necessary. The app does not grade work, diagnose a condition, or establish mastery. See [ACCESSIBILITY.md](ACCESSIBILITY.md) for checks and gaps.
 
-## Optional coach extension · outside the timed minute
+## Optional extensions · outside the timed minute
 
-From `build/`, launch `npm run coach`. In the configured assistant, enter: “Use $learning-coach. I want to build an assembler in C. I know C essentials and have thirty minutes a week. Explain the next task, cite its resource, and give me one starting hint.”
+**Keep a place:** write “Compile sum.c and inspect the output” under **When I return, my next action is…**. Enable **Keep my place on this device**, pause, and reload. Show the restored note and explicitly resume. Saving is off by default, device-only, and removable. Practice checks do not unlock concepts. If saving fails, show the visible limitation and continue temporarily.
 
-Show the tool-grounded parsing task, thirty-minute allocation, and resource link. The coach uses the assistant's model; the server supplies the same reviewed plan as the website. Rehearse this conversation before claiming it works in the showcase account. There is no website chat, saved evidence, or reminder delivery.
+**Transitions:** choose an optional timer. At expiry the learner can stay, take a break, or move to the next small step; nothing advances automatically. For a quick demonstration, use a weekly budget of `0.01` hours before generating: its allocation caps the timer at 36 seconds. Explain that this deliberately tiny budget demonstrates capping rather than a recommended study duration.
 
-**Extension fallback:** Run `npm run mcp:demo` from `build/` to show the real tools and their JSON output without an AI service; describe the coach workflow as instructions rather than pretend the JSON is an AI reply.
+**Personalization:** clear the practice session, select C essentials, and regenerate. The recommendation changes to text parsing. With `0.5` weekly hours, thirty minutes are allocated and sixty remain for later.
+
+**Assistant coach:** from `build/`, launch `npm run coach`, then ask: “Use $learning-coach. I want to build an assembler in C. I know C essentials and have thirty minutes a week. Help me start with one small action, cite its resource, and give me a choice for taking a break.” The assistant uses the shared task guidance; it cannot access or save the website's session.
+
+**Coach fallback:** run `npm run mcp:demo` to demonstrate real tool calls and JSON without a model. Do not present JSON as generated coaching. There is no website chat, saved exercise evidence, or external reminder delivery.
