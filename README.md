@@ -4,6 +4,8 @@ Learning Graph helps self-directed learners find a realistic next step toward a 
 Enter your goal, prior knowledge, and weekly study hours to see a roadmap and an actionable task.  
 The prototype supports one assembler-in-C path, with a website and an optional assistant coach.
 
+**Source code:** [psychemist/moonshot on GitHub](https://github.com/psychemist/moonshot).
+
 **Live website:** [moonshot-two-tau.vercel.app](https://moonshot-two-tau.vercel.app).
 
 The whole roadmap is visible below the learner form. Select **Your roadmap ↓** to jump to it. Browser checks capture desktop and mobile screenshots in `build/test-results/`, which is excluded from Git.
@@ -19,6 +21,8 @@ The whole roadmap is visible below the learner form. Select **Your roadmap ↓**
 - “Help me start” gives every task a concrete first action and four small practice steps.
 - Optional focus view, budget-capped focus timers, explicit transitions, and pause/break controls.
 - An optional restart note and opt-in device saving; restored sessions wait for you to resume.
+- System, Light, and Dark themes, with a remembered manual preference.
+- Optional email/password sign-in using a seeded SQLite account and signed HttpOnly sessions.
 - Inline errors for invalid hours and unsupported goals, with explicit recovery.
 - Keyboard navigation, a mobile layout, and website generation that works offline after the page has loaded.
 - A read-only local MCP server exposing supported goals, the same planner, and concept resource links.
@@ -30,7 +34,7 @@ Prior knowledge is **self-reported**. Changing website inputs clears the old res
 
 **Requirements:** Node.js 24 or newer and npm. **Run all npm commands from the `build/` directory**, where `package.json` lives. Open your terminal there before starting.
 
-**Environment variables:** none required for the website or server. No `.env` file or model API key is needed. Conversational coaching additionally requires the Codex CLI, your normal Codex model access, and its connectivity.
+**Environment variables:** guest planning and the MCP server need no model key. Optional sign-in requires server-only `AUTH_SECRET` and `DEMO_SEED_PASSWORD`; `npm run setup` generates local values in ignored `.env.local` and seeds SQLite. Conversational coaching additionally requires the Codex CLI, your normal Codex model access, and its connectivity.
 
 Install the locked dependencies and start the website:
 
@@ -99,6 +103,14 @@ To serve the production build yourself after building:
 npm run start
 ```
 
+## Sign-in and local setup
+
+Guests can use the full planner without signing in. `npm run setup` installs dependencies and seeds **ada@example.test**. The seed password is generated privately in `build/.env.local` as `DEMO_SEED_PASSWORD`; the local signing key is `AUTH_SECRET`. Neither value is printed, committed, or sent to the client. `.env.example` documents the variable names. Use the private password to sign in at `/sign-in`; `/account` requires a verified session. Sign-out clears the authentication cookie.
+
+`npm run db:seed` regenerates the seeded SQLite user. The database is generated again before each production build and read-only at runtime, which fits this demo's Vercel deployment. Registration, password reset, durable account edits, and cloud learning-state synchronization are not implemented. Signing in does not upload practice notes. Sessions expire after eight hours; changing the seed version or signing key invalidates earlier sessions. Login throttling is best-effort per server instance rather than a distributed production limiter.
+
+On Vercel, configure server-only `AUTH_SECRET` (at least 32 random characters) and `DEMO_SEED_PASSWORD` (at least 12 characters) before building. The build fails if either is absent. Keep those values outside source control and avoid reusing the development signing key in production.
+
 ## How it works
 
 The website is deployed directly to Vercel's `idea-lab/moonshot` project. For a later manual deployment, run `vercel link --yes --project moonshot --scope idea-lab` and `vercel deploy --prod --scope idea-lab` from `build/`. Local `.vercel/` settings are excluded from Git. The coach and stdio MCP server continue to run locally; this deployment hosts the website.
@@ -108,7 +120,7 @@ The website is deployed directly to Vercel's `idea-lab/moonshot` project. For a 
 - **Shared planner:** the website and MCP tools import the same pure function. It validates inputs, resolves prerequisites, selects a reachable task, and caps its allocation to the weekly budget.
 - **MCP:** `build/mcp/server.ts` serves three read-only tools over stdio using the official TypeScript SDK. Valid responses include structured JSON and text; invalid schemas or unsupported inputs return errors.
 - **Skill:** `build/.agents/skills/learning-coach/SKILL.md` guides the assistant through profile collection, tool calls, level-appropriate explanations, citations, and hints. It does not grant persistence or reminder capabilities.
-- **State and routines:** a versioned practice-session model lives in browser memory, with optional local storage. It is separate from curriculum progress and self-reported familiarity. The server writes no learner data, executes no learner code, and makes no network requests. No database or scheduled task is connected.
+- **State and routines:** a versioned practice-session model lives in browser memory, with optional local storage. It is separate from curriculum progress and self-reported familiarity. The server writes no learner data, executes no learner code, and makes no network requests. A read-only seeded SQLite database supports authentication; learning state remains device-only and no scheduled task is connected.
 
 | Tool | Inputs | Returns |
 |---|---|---|
@@ -142,6 +154,6 @@ External resources require internet; offline cold start and offline reload are n
 
 Next: validate the path and support options with consenting neurodivergent and visually impaired learners, complete scheduling, save learner-submitted exercise evidence, implement reminders, and evaluate coaching. The separate build-time curation skill remains proposed.
 
-The project planning date is **7 October 2026**, with the planned build on **8–14 October**. Git author and committer dates follow that schedule at the author's request; they are a planning chronology, not evidence of when each file was written. Verification and roadmap source review occurred on **14 October 2026**. The local `prompts/` folder is intentionally excluded from the public repository.
+The project planning date is **7 October 2026**, with the planned build on **8–14 October**. Verification and roadmap source review occurred on **14 October 2026**. The local `prompts/` folder is intentionally excluded from the public repository.
 
 See [PRODUCT_BRIEF.md](PRODUCT_BRIEF.md), [CAPSTONE_SPEC.md](CAPSTONE_SPEC.md), and [DEMO_SCRIPT.md](DEMO_SCRIPT.md) for product direction, planning dates, and rehearsal instructions.
