@@ -4,6 +4,9 @@ import { useState, type FormEvent } from "react";
 import { generatePlan, getRoadmap, learningPath } from "../lib/planner";
 import { knowledgeOptions } from "../lib/knowledge";
 import RoadmapExplorer from "./roadmap-explorer";
+import PracticePanel from "./practice-panel";
+import { usePracticeSession } from "./use-practice-session";
+import { sameProfile } from "../lib/session";
 import type { LearnerProfile, PlanResult } from "../lib/types";
 
 const initialProfile: LearnerProfile = {
@@ -20,8 +23,16 @@ function formatMinutes(value: number) {
 export default function Home() {
   const [profile, setProfile] = useState<LearnerProfile>(initialProfile);
   const [result, setResult] = useState<PlanResult | null>(null);
+  const practice = usePracticeSession();
+  const [focus, setFocus] = useState(false);
+  const [replacePending, setReplacePending] = useState(false);
+  const sessionResult = practice.session ? generatePlan(practice.session.profile) : null;
+  const sessionPlan = sessionResult?.ok ? sessionResult.plan : null;
+  const compatible = Boolean(practice.session && sameProfile(profile, practice.session.profile));
 
   function updateProfile(changes: Partial<LearnerProfile>) {
+    practice.send({ type: "pause" });
+    setReplacePending(false);
     setProfile((current) => ({ ...current, ...changes }));
     setResult(null);
   }
@@ -29,6 +40,33 @@ export default function Home() {
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setResult(generatePlan(profile));
+  }
+
+  function showRoadmap() {
+    setFocus(false);
+    requestAnimationFrame(() => {
+      const heading = document.getElementById("full-roadmap-heading");
+      heading?.focus();
+      heading?.scrollIntoView({ block: "start" });
+    });
+  }
+
+  function exitFocus() {
+    setFocus(false);
+    requestAnimationFrame(() => (document.getElementById("help-me-start") ?? document.getElementById("learner-form"))?.focus());
+  }
+
+  function startPractice() {
+    if (!plan) return;
+    if (practice.session && (!compatible || practice.session.taskId !== plan.task.id)) {
+      practice.send({ type: "pause" });
+      setReplacePending(true);
+      return;
+    }
+    if (practice.session) {
+      practice.send({ type: "resume" });
+      document.getElementById("practice-heading")?.focus();
+    } else practice.start(profile, plan);
   }
 
   const errors = result && !result.ok ? result.errors : {};
@@ -45,23 +83,24 @@ export default function Home() {
 
   return (
     <>
-      <a className="skip-link" href="#learner-form">Skip to your learning plan</a>
+      <a className="skip-link" href={focus ? "#practice-heading" : "#learner-form"}>{focus ? "Skip to your practice session" : "Skip to your learning plan"}</a>
       <header className="site-header">
         <a className="wordmark" href="/" aria-label="Learning Graph home">
           <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><path d="M7 24 16 8l9 16H7Z" fill="none" stroke="currentColor" strokeWidth="1.5"/><circle cx="7" cy="24" r="3" fill="currentColor"/><circle cx="16" cy="8" r="3" fill="currentColor"/><circle cx="25" cy="24" r="3" fill="currentColor"/></svg>
           Learning Graph
         </a>
-        <nav className="header-navigation" aria-label="Page navigation"><a href="#full-roadmap">Your roadmap <span aria-hidden="true">↓</span></a><span className="preview-label"><span aria-hidden="true" className="status-dot"/> A focused learning preview</span></nav>
+        <nav className="header-navigation" aria-label="Page navigation"><a href="#full-roadmap" onClick={(event) => { event.preventDefault(); showRoadmap(); }}>Your roadmap <span aria-hidden="true">↓</span></a><span className="preview-label"><span aria-hidden="true" className="status-dot"/> A focused learning preview</span></nav>
       </header>
 
       <main>
-        <section className="intro" aria-labelledby="page-title">
+        <section hidden={focus} className="intro" aria-labelledby="page-title">
           <p className="eyebrow">A LITTLE DIRECTION GOES A LONG WAY</p>
           <h1 id="page-title">Big goal.<br/><span>Small, clear next step.</span></h1>
           <p className="intro-description">Start where you are. Find the concepts that matter, understand how they connect, and make room to practise.</p>
         </section>
 
-        <div className="workspace">
+        {!practice.session && practice.message && <p className="session-notice" role="status">{practice.message}</p>}
+        <div className="workspace" hidden={focus}>
           <section className="input-panel" aria-labelledby="profile-heading">
             <div className="section-heading"><span className="step-number">01</span><h2 id="profile-heading">Your starting point</h2></div>
             <p className="section-description">A plan should fit your life, and what you already know.</p>
@@ -95,7 +134,7 @@ export default function Home() {
               </div>
 
               <button className="primary-button" type="submit">Find my next step <span aria-hidden="true">→</span></button>
-              <p className="form-note">Your inputs stay in this page. Nothing is saved.</p>
+              <p className="form-note">Inputs stay in this page unless you choose “Keep my place” in a practice session.</p>
             </form>
           </section>
 
@@ -114,6 +153,8 @@ export default function Home() {
                   <div className="task-detail why"><h4>Why this step?</h4><p>{plan.task.explanation}</p></div>
                   <div className="allocation"><span className="allocation-icon" aria-hidden="true">◷</span><div><p><strong>{formatMinutes(plan.allocatedMinutes)}</strong> allocated this week</p><p>{plan.remainingMinutes > 0 ? `${formatMinutes(plan.remainingMinutes)} remain. Continue the rest in a later week; you do not need to rush.` : "This task fits your weekly budget. This preview allocates only your first task."}</p></div></div>
                   <div className="resource"><span className="resource-label">A RESOURCE TO HELP</span><a href={plan.resource.url} target="_blank" rel="noopener noreferrer">{plan.resource.title} <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a><p>{plan.resource.provider} · External resource · Internet required</p></div>
+                  <div className="start-support"><button id="help-me-start" type="button" className="secondary-button" onClick={startPractice}>Help me start <span aria-hidden="true">→</span></button><p>One small action, an optional timer, and a place to pause.</p></div>
+                  {replacePending && <div className="session-notice" role="status"><p>A different practice session is paused. Starting this task replaces its checklist and note.</p><button type="button" className="secondary-button" onClick={() => { practice.start(profile, plan); setReplacePending(false); requestAnimationFrame(() => document.getElementById("practice-heading")?.focus()); }}>Start this task instead</button><button type="button" className="text-button" onClick={() => setReplacePending(false)}>Keep current session</button></div>}
                 </article>
               </div>
             ) : (
@@ -127,7 +168,11 @@ export default function Home() {
             )}
           </section>
         </div>
-        <RoadmapExplorer roadmap={roadmap} onToggleFamiliar={toggleFamiliar}/>
+        {practice.session && sessionPlan && <PracticePanel key={practice.session.taskId + JSON.stringify(practice.session.profile)} session={practice.session} plan={sessionPlan} compatible={compatible}
+          saving={practice.saving} message={practice.message} focus={focus} onAction={practice.send} onSaving={practice.changeSaving}
+          onFocus={() => focus ? exitFocus() : setFocus(true)} onRoadmap={showRoadmap}
+          onClear={() => { practice.clear(); exitFocus(); }} onRestore={() => { if (practice.session) { setProfile(structuredClone(practice.session.profile)); setResult(generatePlan(practice.session.profile)); setReplacePending(false); requestAnimationFrame(() => document.getElementById("practice-heading")?.focus()); } }}/>}
+        <div hidden={focus}><RoadmapExplorer roadmap={roadmap} onToggleFamiliar={toggleFamiliar}/></div>
         <footer className="site-footer"><p>Progress starts with a useful next step.</p><span>Learning Graph · Moonshot 2026</span></footer>
       </main>
     </>
