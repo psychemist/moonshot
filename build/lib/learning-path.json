@@ -287,7 +287,26 @@
       "expectedOutput": "Your program compiles successfully and prints 5 when you run it. Keep the source file and a note of the command you used.",
       "estimatedMinutes": 60,
       "resourceId": "gnu-c",
-      "explanation": "Your assembler will be written in C. Getting a small program to compile and run gives you a starting point before handling text input. Python and JavaScript experience helps, but does not establish familiarity with C."
+      "explanation": "Your assembler will be written in C. Getting a small program to compile and run gives you a starting point before handling text input. Python and JavaScript experience helps, but does not establish familiarity with C.",
+      "startingAction": "Create a practice folder and an empty sum.c file.",
+      "practiceSteps": [
+        {
+          "id": "write-first-c-program-step-1",
+          "action": "Create a practice folder and an empty sum.c file."
+        },
+        {
+          "id": "write-first-c-program-step-2",
+          "action": "Write down the two input integers and the result you expect."
+        },
+        {
+          "id": "write-first-c-program-step-3",
+          "action": "Write the C program, using the reference when you need it."
+        },
+        {
+          "id": "write-first-c-program-step-4",
+          "action": "Compile, run, and compare the result with your expectation."
+        }
+      ]
     },
     {
       "id": "identify-hack-instructions",
@@ -297,7 +316,26 @@
       "expectedOutput": "An ordered list containing @2, D=A, and @3. Blank lines and comments are excluded, including the comment after an instruction.",
       "estimatedMinutes": 90,
       "resourceId": "nand-project-6",
-      "explanation": "You marked C essentials as prior knowledge, so the introductory C task is skipped. An assembler needs to identify instructions before translating them. Practise that small step before tackling the complete project."
+      "explanation": "You marked C essentials as prior knowledge, so the introductory C task is skipped. An assembler needs to identify instructions before translating them. Practise that small step before tackling the complete project.",
+      "startingAction": "Open a scratch text file and add one Hack instruction.",
+      "practiceSteps": [
+        {
+          "id": "identify-hack-instructions-step-1",
+          "action": "Add a Hack instruction, a comment, and a blank line to a scratch file."
+        },
+        {
+          "id": "identify-hack-instructions-step-2",
+          "action": "Label which lines contain instructions before writing code."
+        },
+        {
+          "id": "identify-hack-instructions-step-3",
+          "action": "Write a small parser that ignores comments and blank lines."
+        },
+        {
+          "id": "identify-hack-instructions-step-4",
+          "action": "Compare its output with your labelled example."
+        }
+      ]
     },
     {
       "id": "practise-binary-representation",
@@ -307,7 +345,26 @@
       "resourceId": "nand-project-4",
       "exercise": "Convert 0, 2, and 32767 to sixteen-bit binary representations. Explain which part of an address instruction holds its numeric value.",
       "expectedOutput": "Three fixed-width binary representations and a short explanation of an address instruction.",
-      "explanation": "Encoding requires understanding fixed-width bits before translating the Hack language."
+      "explanation": "Encoding requires understanding fixed-width bits before translating the Hack language.",
+      "startingAction": "Write the number 2 and draw sixteen empty bit positions.",
+      "practiceSteps": [
+        {
+          "id": "practise-binary-representation-step-1",
+          "action": "Draw sixteen bit positions for the number 2."
+        },
+        {
+          "id": "practise-binary-representation-step-2",
+          "action": "Convert 0, 2, and 32767 using your reference."
+        },
+        {
+          "id": "practise-binary-representation-step-3",
+          "action": "Check that each result has sixteen bits."
+        },
+        {
+          "id": "practise-binary-representation-step-4",
+          "action": "Describe where the address value belongs in an instruction."
+        }
+      ]
     },
     {
       "id": "practise-hack-instructions",
@@ -317,7 +374,26 @@
       "resourceId": "nand-project-4",
       "exercise": "Read the official Hack language reference. Classify a small set of address and computation instructions and identify their fields.",
       "expectedOutput": "A labelled set of examples distinguishing addresses from computation, destination, and jump fields.",
-      "explanation": "You need to identify each instruction form before assigning its binary fields."
+      "explanation": "You need to identify each instruction form before assigning its binary fields.",
+      "startingAction": "Open the language reference and find one address instruction.",
+      "practiceSteps": [
+        {
+          "id": "practise-hack-instructions-step-1",
+          "action": "Find one address instruction in the reference."
+        },
+        {
+          "id": "practise-hack-instructions-step-2",
+          "action": "Find one computation instruction and copy it into your notes."
+        },
+        {
+          "id": "practise-hack-instructions-step-3",
+          "action": "Label its computation, destination, and jump fields."
+        },
+        {
+          "id": "practise-hack-instructions-step-4",
+          "action": "Classify a few more examples and check your labels."
+        }
+      ]
     },
     {
       "id": "practise-c-strings",
@@ -327,7 +403,26 @@
       "resourceId": "gnu-strings",
       "exercise": "Create a character buffer, find its terminating null, and compare two short strings. Explain what happens when the input is too long for the buffer.",
       "expectedOutput": "A small program and notes demonstrating string length, comparison, and a safe length limit.",
-      "explanation": "Strings and arrays help represent names safely. They support text parsing but are not an extra blocker for the first parsing exercise."
+      "explanation": "Strings and arrays help represent names safely. They support text parsing but are not an extra blocker for the first parsing exercise.",
+      "startingAction": "Create a scratch C file and write one short string to inspect.",
+      "practiceSteps": [
+        {
+          "id": "practise-c-strings-step-1",
+          "action": "Create a scratch C file containing one short string."
+        },
+        {
+          "id": "practise-c-strings-step-2",
+          "action": "Locate its terminating null and record the buffer size."
+        },
+        {
+          "id": "practise-c-strings-step-3",
+          "action": "Compare two strings in your small program."
+        },
+        {
+          "id": "practise-c-strings-step-4",
+          "action": "Try a boundary case and document the safe length limit."
+        }
+      ]
     },
     {
       "id": "practise-file-io",
@@ -337,7 +432,26 @@
       "resourceId": "gnu-libc",
       "exercise": "Read a small text file one line at a time and write its nonempty lines to a new file. Handle missing files and close opened streams.",
       "expectedOutput": "An input file, an output file, and a clear failure message when the input cannot be opened.",
-      "explanation": "The final assembler takes an .asm file and produces a .hack file. File handling makes that workflow repeatable."
+      "explanation": "The final assembler takes an .asm file and produces a .hack file. File handling makes that workflow repeatable.",
+      "startingAction": "Create a tiny input file containing two lines and a blank line.",
+      "practiceSteps": [
+        {
+          "id": "practise-file-io-step-1",
+          "action": "Create a tiny input file with two lines and a blank line."
+        },
+        {
+          "id": "practise-file-io-step-2",
+          "action": "Read one line and inspect what your program received."
+        },
+        {
+          "id": "practise-file-io-step-3",
+          "action": "Write the nonempty lines to an output file and close the streams."
+        },
+        {
+          "id": "practise-file-io-step-4",
+          "action": "Try a missing input file and check the failure message."
+        }
+      ]
     },
     {
       "id": "practise-instruction-encoding",
@@ -347,7 +461,26 @@
       "resourceId": "nand-project-6",
       "exercise": "Using the official Hack specification, implement numeric address translation and lookup tables for computation, destination, and jump fields. Start without symbols.",
       "expectedOutput": "Tests showing sixteen output bits for each valid instruction, matched against the reference assembler.",
-      "explanation": "This is the first working translation stage. Numeric instructions can be tested before symbol handling is added."
+      "explanation": "This is the first working translation stage. Numeric instructions can be tested before symbol handling is added.",
+      "startingAction": "Choose one numeric address instruction as your first test case.",
+      "practiceSteps": [
+        {
+          "id": "practise-instruction-encoding-step-1",
+          "action": "Choose one numeric address instruction and record its expected bits."
+        },
+        {
+          "id": "practise-instruction-encoding-step-2",
+          "action": "Implement numeric address translation."
+        },
+        {
+          "id": "practise-instruction-encoding-step-3",
+          "action": "Add computation, destination, and jump lookups using the specification."
+        },
+        {
+          "id": "practise-instruction-encoding-step-4",
+          "action": "Compare a small set of outputs against the reference assembler."
+        }
+      ]
     },
     {
       "id": "practise-symbol-tables",
@@ -357,7 +490,26 @@
       "resourceId": "gnu-structures",
       "exercise": "Use a simple array of name/address records. Add a name, look it up, and handle a missing name. Start with a fixed-size table rather than a new data-structure course.",
       "expectedOutput": "A small table implementation with lookup, insertion, and boundary tests.",
-      "explanation": "A modest symbol table is enough for this project. It connects readable labels and variable names to numeric addresses."
+      "explanation": "A modest symbol table is enough for this project. It connects readable labels and variable names to numeric addresses.",
+      "startingAction": "Write one example name and its address in a two-column note.",
+      "practiceSteps": [
+        {
+          "id": "practise-symbol-tables-step-1",
+          "action": "Write an example name and its address in two columns."
+        },
+        {
+          "id": "practise-symbol-tables-step-2",
+          "action": "Define a fixed-size collection of name/address records."
+        },
+        {
+          "id": "practise-symbol-tables-step-3",
+          "action": "Add one name and look it up."
+        },
+        {
+          "id": "practise-symbol-tables-step-4",
+          "action": "Try a missing name and a full table; record the results."
+        }
+      ]
     },
     {
       "id": "practise-two-pass-assembly",
@@ -367,7 +519,26 @@
       "resourceId": "nand-project-6",
       "exercise": "Extend your translator with a first pass that records label addresses and a second pass that resolves variables and emits instructions. Follow the official symbol rules.",
       "expectedOutput": "Symbolic test inputs produce the same output as the reference assembler, including forward label references.",
-      "explanation": "Labels may be used before their definitions. Two passes let the assembler resolve them consistently."
+      "explanation": "Labels may be used before their definitions. Two passes let the assembler resolve them consistently.",
+      "startingAction": "Sketch a tiny input that refers to a label before defining it.",
+      "practiceSteps": [
+        {
+          "id": "practise-two-pass-assembly-step-1",
+          "action": "Sketch a tiny input with a forward label reference."
+        },
+        {
+          "id": "practise-two-pass-assembly-step-2",
+          "action": "Record label addresses during the first pass."
+        },
+        {
+          "id": "practise-two-pass-assembly-step-3",
+          "action": "Resolve variables and emit instructions during the second pass."
+        },
+        {
+          "id": "practise-two-pass-assembly-step-4",
+          "action": "Compare numeric and symbolic cases with the reference output."
+        }
+      ]
     },
     {
       "id": "practise-error-handling",
@@ -377,7 +548,26 @@
       "resourceId": "gnu-libc",
       "exercise": "Add checks for malformed instructions and file failures. Report a clear reason and the original source line instead of producing misleading output.",
       "expectedOutput": "Invalid-input cases produce useful messages and a failure exit status.",
-      "explanation": "Good error messages make the assembler easier to debug and prevent invalid output from looking successful."
+      "explanation": "Good error messages make the assembler easier to debug and prevent invalid output from looking successful.",
+      "startingAction": "Write down one malformed instruction and the message you would want.",
+      "practiceSteps": [
+        {
+          "id": "practise-error-handling-step-1",
+          "action": "Choose a malformed instruction and describe a useful message."
+        },
+        {
+          "id": "practise-error-handling-step-2",
+          "action": "Add a check that reports its original source line."
+        },
+        {
+          "id": "practise-error-handling-step-3",
+          "action": "Add a clear file-failure message and failure exit status."
+        },
+        {
+          "id": "practise-error-handling-step-4",
+          "action": "Run invalid cases and confirm they do not look successful."
+        }
+      ]
     },
     {
       "id": "practise-testing",
@@ -387,7 +577,26 @@
       "resourceId": "nand-software",
       "exercise": "Use the official Project 6 test programs. Compare your generated files with output from the reference assembler and record differences. Include numeric and symbolic inputs.",
       "expectedOutput": "A repeatable comparison procedure with results for the supplied test programs.",
-      "explanation": "Matching a reference provides practical evidence of correct translation; merely reading a resource does not."
+      "explanation": "Matching a reference provides practical evidence of correct translation; merely reading a resource does not.",
+      "startingAction": "Choose one official Project 6 test program and locate your output folder.",
+      "practiceSteps": [
+        {
+          "id": "practise-testing-step-1",
+          "action": "Choose one official Project 6 test program."
+        },
+        {
+          "id": "practise-testing-step-2",
+          "action": "Run it through your assembler and the reference tool."
+        },
+        {
+          "id": "practise-testing-step-3",
+          "action": "Compare the generated files and record any differences."
+        },
+        {
+          "id": "practise-testing-step-4",
+          "action": "Repeat with a symbolic input and write down the comparison commands."
+        }
+      ]
     },
     {
       "id": "practise-assembler-integration",
@@ -397,7 +606,26 @@
       "resourceId": "nand-project-6",
       "exercise": "Join file input, parsing, encoding, symbol handling, and validation behind one command that accepts an .asm path and writes a .hack file.",
       "expectedOutput": "A reproducible command, output file, and short usage instructions for another person.",
-      "explanation": "Integration brings the separate learning steps together into a useful project."
+      "explanation": "Integration brings the separate learning steps together into a useful project.",
+      "startingAction": "Write the command you want another person to be able to run.",
+      "practiceSteps": [
+        {
+          "id": "practise-assembler-integration-step-1",
+          "action": "Write down the command and example input path."
+        },
+        {
+          "id": "practise-assembler-integration-step-2",
+          "action": "Connect reading, parsing, encoding, and symbol handling."
+        },
+        {
+          "id": "practise-assembler-integration-step-3",
+          "action": "Write the resulting .hack output through that command."
+        },
+        {
+          "id": "practise-assembler-integration-step-4",
+          "action": "Run a complete comparison and add short usage instructions."
+        }
+      ]
     },
     {
       "id": "practise-hack-assembler",
@@ -407,7 +635,26 @@
       "resourceId": "nand-project-6",
       "exercise": "Run the integrated assembler against the official Project 6 programs. Compare output with the reference tool and explain your two-pass design from your own implementation.",
       "expectedOutput": "Matching outputs, a repeatable validation record, and an explanation of how your assembler works.",
-      "explanation": "This is the project destination. Validation is performed by you; the learning planner does not execute or grade your program."
+      "explanation": "This is the project destination. Validation is performed by you; the learning planner does not execute or grade your program.",
+      "startingAction": "Choose the first official test program for your demonstration.",
+      "practiceSteps": [
+        {
+          "id": "practise-hack-assembler-step-1",
+          "action": "Choose the first official test program for your demonstration."
+        },
+        {
+          "id": "practise-hack-assembler-step-2",
+          "action": "Run your integrated command and compare the output."
+        },
+        {
+          "id": "practise-hack-assembler-step-3",
+          "action": "Record a repeatable validation procedure for the remaining programs."
+        },
+        {
+          "id": "practise-hack-assembler-step-4",
+          "action": "Explain the two-pass design using your own implementation."
+        }
+      ]
     }
   ]
 }
