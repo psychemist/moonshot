@@ -14,8 +14,8 @@ Device saving is off by default. Opting in stores only the task, profile snapsho
 
 | Check | Result and practical limit |
 |---|---|
-| Unit/protocol suite | 78 tests passed, including dataset completeness, clock-controlled timers, state transitions, storage validation/failure/reset, and planner parity. |
-| Production browser suite | 26 checks passed, including default storage opt-out, restore/resume, task isolation, keyboard focus, mobile/offline operation, graph/list parity, and reflow/forced-colours emulation. |
+| Unit/protocol suite | 87 tests passed, including dataset completeness, clock-controlled timers, state transitions, storage validation/failure/reset, and planner parity. |
+| Production browser suite | 33 checks passed, including default storage opt-out, restore/resume, task isolation, keyboard focus, mobile/offline operation, graph/list parity, and reflow/forced-colours emulation. |
 | axe accessibility audit | No detected WCAG A/AA violations across initial page, expanded practice checklist, and focus view. Tags: wcag2a, wcag2aa, wcag21aa, wcag22aa. This cannot establish full conformance or screen-reader usability. |
 | Keyboard inspection | Browser-tool interaction confirmed Enter generates a plan, Tab reaches Help me start, Enter opens the session at its heading, and Focus view preserves a usable focus destination. Automated checks also cover exit restoration and selected-node details navigation. |
 | Accessibility tree | Inspected names, headings, task status, node prerequisite descriptions, optional timer, and equivalent list content through the browser accessibility snapshot. This does not substitute for listening with a screen reader. |
@@ -26,6 +26,10 @@ Device saving is off by default. Opting in stores only the task, profile snapsho
 | Learner validation | Not performed. Recruit consenting neurodivergent and visually impaired learners before claiming improved starting, transitions, retention, or access. |
 
 Run npm commands from `build/`: `npm run test`, `npm run typecheck`, `npm run build`, then `npm run test:e2e`. Browser tests use installed Google Chrome against a production server on port 3100. Build artifacts and screenshots remain excluded from Git.
+
+## Theme and sign-in additions
+
+The header offers System, Light, and Dark choices with a separate remembered preference. Both themes are covered by axe checks on the planner and focus view; the sign-in error state is also checked in dark mode. The mobile header wraps rather than squeezing controls. Sign-in uses labelled email/password fields, password-manager autocomplete, an optional Show password control, generic errors, and a guest route. Authentication requires connectivity; guest planning retains its loaded-page offline flow.
 
 ## Manual follow-up protocol
 
