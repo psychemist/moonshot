@@ -32,6 +32,8 @@ export interface TaskTemplate {
   estimatedMinutes: number;
   resourceId: string;
   explanation: string;
+  startingAction: string;
+  practiceSteps: { id: string; action: string }[];
 }
 
 export interface LearningPath {
