@@ -66,17 +66,20 @@ export default function RoadmapExplorer({ roadmap, onToggleFamiliar }: {
   }
 
   function select(id: string) { setSelectedId(id); }
+  function jumpToDetails() { document.getElementById("selected-step-title")?.focus(); }
 
   function nodeButton(node: StudyPlan["roadmap"][number], index: number) {
     const required = learningPath.edges.filter((edge) => edge.to === node.id && edge.relation === "prerequisite");
     return <>
       <button type="button" className={`graph-node ${node.status} ${parents.has(node.id) || children.has(node.id) ? "connected" : ""}`}
         aria-pressed={node.id === selectedId} aria-controls="step-details" aria-describedby={`dependency-${node.id}`}
+        onFocus={(event) => event.currentTarget.scrollIntoView({ block: "nearest", inline: "nearest" })}
         onClick={() => select(node.id)}>
         <span className="graph-node-top"><span>{node.kind === "project" ? "PROJECT" : `STEP ${String(index + 1).padStart(2, "0")}`}</span><span aria-hidden="true">{node.status === "self-reported" ? "✓" : node.kind === "project" ? "◇" : "○"}</span></span>
         <span className="graph-node-title">{node.title}</span>
         <span className="graph-node-status">{statusLabels[node.status]}</span>
       </button>
+      {node.id === selectedId && <a className="node-details-shortcut" href="#selected-step-title" onClick={(event) => { event.preventDefault(); jumpToDetails(); }}>Read details for {node.title}</a>}
       <span className="sr-only" id={`dependency-${node.id}`}>{required.length ? `Requires ${required.map((edge) => nodeLabel(edge.from)).join(", ")}.` : "No hard prerequisites."}</span>
     </>;
   }
@@ -84,15 +87,17 @@ export default function RoadmapExplorer({ roadmap, onToggleFamiliar }: {
   return (
     <section id="full-roadmap" className="roadmap-section" aria-labelledby="full-roadmap-heading">
       <div className="roadmap-header">
-        <div><p className="eyebrow">SEE HOW IT ALL CONNECTS</p><h2 id="full-roadmap-heading">Your whole roadmap</h2><p>Build a Hack assembler in C, from your first program to a tested project.</p></div>
+        <div><p className="eyebrow">SEE HOW IT ALL CONNECTS</p><h2 id="full-roadmap-heading" tabIndex={-1}>Your whole roadmap</h2><p>Build a Hack assembler in C, from your first program to a tested project.</p></div>
         <div className="roadmap-summary"><strong>12 concepts <span>+ 1 project</span></strong><span>8 resources · {familiarCount} marked familiar</span><span>~{Number(remainingHours.toFixed(1))} hours remaining · estimates only</span></div>
       </div>
+      <p className="sr-only" role="status">Selected step: {selected.title}. Use Read selected step details to move to its explanation.</p>
 
       <div className="roadmap-toolbar">
         <div className="view-switch" role="group" aria-label="Roadmap view">
           <button type="button" aria-pressed={view === "graph"} onClick={() => setViewPreference("graph")}><span aria-hidden="true">⌘</span> Graph</button>
           <button type="button" aria-pressed={view === "list"} onClick={() => setViewPreference("list")}><span aria-hidden="true">☷</span> List</button>
         </div>
+        <button type="button" className="text-button details-jump" onClick={jumpToDetails}>Read selected step details</button>
         <div className="roadmap-search"><label className="sr-only" htmlFor="roadmap-search">Search roadmap</label><input id="roadmap-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Find a concept…"/><span className="sr-only" role="status">{filtered.length} of {roadmap.length} roadmap steps match.</span></div>
         {view === "graph" && <div className="zoom-controls" role="group" aria-label="Graph zoom">
           <button type="button" aria-label="Zoom out" disabled={zoom <= .25} onClick={() => setZoom((value) => Math.max(.25, value - .15))}>−</button>
@@ -144,8 +149,8 @@ export default function RoadmapExplorer({ roadmap, onToggleFamiliar }: {
         <aside className="step-inspector" id="step-details" aria-labelledby="selected-step-title">
           <div className="inspector-content">
             <p className="eyebrow">STEP DETAILS</p>
-            <h3 id="selected-step-title">{selected.title}</h3>
-            <p className={`inspector-status ${selected.status}`} role="status">{statusLabels[selected.status]}</p>
+            <h3 id="selected-step-title" tabIndex={-1}>{selected.title}</h3>
+            <p className={`inspector-status ${selected.status}`}>{statusLabels[selected.status]}</p>
             <p className="concept-description">{selected.description}</p>
             <div className="inspector-block"><h4>Before this step</h4>{prerequisites.length ? <ul>{prerequisites.map((edge) => <li key={edge.from}><button type="button" className="dependency-link" onClick={() => select(edge.from)}>{nodeLabel(edge.from)} <span aria-hidden="true">↗</span></button></li>)}</ul> : <p>You can start here. No hard prerequisites.</p>}</div>
             {optional.length > 0 && <div className="inspector-block"><h4>Helpful, not required</h4><ul>{optional.map((edge) => <li key={edge.from}><button type="button" className="dependency-link" onClick={() => select(edge.from)}>{nodeLabel(edge.from)} <span aria-hidden="true">↗</span></button></li>)}</ul></div>}
