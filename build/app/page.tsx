@@ -5,6 +5,7 @@ import { generatePlan, getRoadmap, learningPath } from "../lib/planner";
 import { knowledgeOptions } from "../lib/knowledge";
 import RoadmapExplorer from "./roadmap-explorer";
 import PracticePanel from "./practice-panel";
+import SiteHeader from "./site-header";
 import { usePracticeSession } from "./use-practice-session";
 import { sameProfile } from "../lib/session";
 import type { LearnerProfile, PlanResult } from "../lib/types";
@@ -84,13 +85,7 @@ export default function Home() {
   return (
     <>
       <a className="skip-link" href={focus ? "#practice-heading" : "#learner-form"}>{focus ? "Skip to your practice session" : "Skip to your learning plan"}</a>
-      <header className="site-header">
-        <a className="wordmark" href="/" aria-label="Learning Graph home">
-          <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><path d="M7 24 16 8l9 16H7Z" fill="none" stroke="currentColor" strokeWidth="1.5"/><circle cx="7" cy="24" r="3" fill="currentColor"/><circle cx="16" cy="8" r="3" fill="currentColor"/><circle cx="25" cy="24" r="3" fill="currentColor"/></svg>
-          Learning Graph
-        </a>
-        <nav className="header-navigation" aria-label="Page navigation"><a href="#full-roadmap" onClick={(event) => { event.preventDefault(); showRoadmap(); }}>Your roadmap <span aria-hidden="true">↓</span></a><span className="preview-label"><span aria-hidden="true" className="status-dot"/> A focused learning preview</span></nav>
-      </header>
+      <SiteHeader onShowRoadmap={showRoadmap}/>
 
       <main>
         <section hidden={focus} className="intro" aria-labelledby="page-title">
