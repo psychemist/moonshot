@@ -4,7 +4,7 @@
 **Planned seven-day build:** 8–14 October 2026  
 **Showcase:** Moonshot by TechCabal, Lagos, 28–29 October 2026; supplied by the project brief, not independently verified.  
 **Source research date:** 14 October 2026; recorded separately from the project planning date.  
-**Status:** Website slice, complete curated roadmap with graph/list inspection, and local coach/MCP extension implemented; remaining capstone work is planned. Dates below preserve the original schedule, not retrospective completion claims.
+**Status:** Website slice, complete curated roadmap with graph/list inspection, optional start–switch–resume support, and local coach/MCP extension implemented; remaining capstone work is planned. Dates below preserve the original schedule, not retrospective completion claims.
 
 ## Problem and primary user
 
@@ -16,7 +16,7 @@ The initial project is **build a Hack assembler in C**. It is a systems project 
 
 ## Delivered implementation
 
-The application is in `build/`. The website uses 12 concepts, one project, eight resources, and 13 task templates. Its whole roadmap is visible before generation, with searchable graph/list views, zoom and fit controls, and keyboard-accessible step inspection. Both views show the same status, prerequisites, optional background, exercise, rationale, and resources. Familiarity selections are self-reported and session-only. It selects one task, explains it, and allocates time within the weekly budget; it does not yet schedule a complete week or save evidence.
+The application is in `build/`. The website uses 12 concepts, one project, eight resources, and 13 task templates. Its whole roadmap is visible before generation, with searchable graph/list views, zoom and fit controls, and keyboard-accessible step inspection. Both views show the same status, prerequisites, optional background, exercise, rationale, and resources. Familiarity selections are self-reported. Opting into practice-session saving also saves the associated profile snapshot on that device. It selects one task, explains it, and allocates time within the weekly budget; it does not yet schedule a complete week or save exercise evidence. Each task now has a starting action and four practice steps. Optional focus view, a capped timer, explicit breaks/transitions, a restart note, and opt-in local saving support starting and returning. A restored session is paused; checklist checks never unlock concepts or claim mastery.
 
 The `learning-graph` MCP server runs locally over stdio and exposes three read-only tools. It imports the website's planner and dataset. The skill at `build/.agents/skills/learning-coach/SKILL.md` guides an assistant to collect a profile, call those tools, explain the result, cite resources, and offer hints. `npm run coach` from `build/` supplies session-only Codex MCP configuration without editing global configuration. Codex and its normal model access are required for conversation; the server itself needs no model API key.
 
@@ -49,7 +49,7 @@ These five criteria describe the complete capstone target. AC1 and AC3 are imple
 
 - **Application:** Next.js and TypeScript in `build/` render a responsive form, complete graph and accessible list, shared concept inspector, and next-task card. Complete weekly scheduling is planned. Core assets are bundled.
 - **Planner:** Shared deterministic prerequisite traversal over bundled JSON, with cycle/reference checks and provisional estimates. Only `prerequisite` edges block work; `useful_for` edges provide optional context. The website and MCP tools call the same function.
-- **Persistence:** Current profiles and results live in browser memory. Local-storage evidence, progress, reminder time, reset controls, and storage-failure handling are planned. No backend database or authentication.
+- **Persistence:** A versioned practice-session model stores profile snapshot, task ID, practice checks, timer position, and restart note in memory, with opt-in browser local storage and clear/reset controls. Reload restores paused; storage failures are visible. Exercise evidence, curriculum progress, and reminders remain planned. No backend database or authentication.
 - **Skills and MCP:** Implemented `learning-coach` skill plus local stdio `learning-graph` server with `list_learning_goals`, `generate_learning_plan`, and `get_concept_resources`. The assistant supplies explanations and hints; the server supplies reviewed plans and source metadata. A separate build-time curation skill remains proposed. IntelliTrex reuse remains unverified.
 - **Routines:** No scheduled task or reminder is implemented. The planned in-app reminder uses `Africa/Lagos` and appears while the page is open or on a later visit. External scheduled tasks, email, and push delivery remain deferred.
 
@@ -66,6 +66,8 @@ The current planner receives goal, selected prior knowledge, weekly hours, and t
 | `list_learning_goals` | Empty object | Supported goal/aliases, valid knowledge identifiers, and actual prototype limits. |
 | `generate_learning_plan` | `goal` string, `prior_knowledge` array of listed identifiers, positive finite numeric `weekly_hours` | Existing planner result: roadmap, task, source, rationale, allocation, and remaining time. |
 | `get_concept_resources` | `concept_id` from a concept node | Reviewed concept/source metadata. Does not fetch page content. |
+
+Task templates additionally return `startingAction` and ordered `practiceSteps`; existing plan fields remain available. Browser practice sessions are separate from planner evidence and cannot be accessed through MCP.
 
 All tools are read-only, idempotent, and perform no network requests or persistence. Schema violations return MCP tool errors; unsupported goals and unknown concepts return explicit errors without a fabricated plan or resource. No arbitrary file reads, URL retrieval, or learner-code execution is supported. stdout carries only the MCP protocol.
 
@@ -102,7 +104,17 @@ Dates are the agreed planning schedule in **2026**, not claims that work has alr
 | 7. Verify accessibility and network independence | 13 October | The core flow works by keyboard and at a narrow mobile viewport. AC5 passes; storage failures show a visible persistence limitation. |
 | 8. Run acceptance checks and rehearse | 14 October | All five acceptance criteria pass. Reset and replay the chosen demo within three minutes; document any remaining limits before the showcase. |
 
-Tasks 1 and 4 are delivered. Task 2's complete dataset, references, dependency validation, and review dates are delivered; selected-link access from the showcase connection remains untested. Tasks 3 and 5–8 remain partial or planned: next-task allocation, task explanations, keyboard/mobile interaction, and loaded-page offline planning already work, but full scheduling, saved evidence, reminders, and timed rehearsal do not. The coach/MCP extension is an additional implemented capability. Keep dates as the original planning schedule rather than claiming historical completion.
+Tasks 1 and 4 are delivered. Task 2's complete dataset, references, dependency validation, and review dates are delivered; selected-link access from the showcase connection remains untested. Tasks 3 and 5–8 remain partial or planned: next-task allocation, task explanations, keyboard/mobile interaction, and loaded-page offline planning already work, but full scheduling, saved exercise evidence, reminders, and timed rehearsal do not. Optional device-saved practice sessions are an additional capability and do not satisfy AC4's exercise-evidence requirement. The coach/MCP extension is an additional implemented capability. Keep dates as the original planning schedule rather than claiming historical completion.
+
+## Starting, switching, and returning extension
+
+Available to all learners without a diagnosis: “Help me start,” a concrete starting action and four practice steps per task, a quieter focus view, optional timer durations capped to allocation, explicit stay/break/next-step choices, and a restart note. Timer completion never checks a step or changes curriculum progress. Profile changes pause the old session; replacing its checklist/note requires an explicit choice.
+
+“Keep my place on this device” is off by default. Saved session data is versioned and validated against the current dataset. Disabling saving removes persisted data; Clear saved session also resets the in-memory practice session. No cloud synchronization, health information, or diagnosis is needed. Budget allocation is a recommendation, not cumulative weekly time tracking.
+
+The extension is informed by [W3C cognitive accessibility](https://www.w3.org/WAI/WCAG2/supplemental/objectives/o5-user-focus/), [NAS organising guidance](https://www.autism.org.uk/advice-and-guidance/behaviour/organising-and-prioritising/all-audiences), and [NICE environmental modifications](https://www.nice.org.uk/guidance/ng87/chapter/recommendations), reviewed 14 October 2026. A [108-person ADHD trial](https://pubmed.ncbi.nlm.nih.gov/40276075/) found an activation benefit but no significant between-group advantage on procrastination; it does not validate this app. Usefulness remains a hypothesis to evaluate with consenting learners.
+
+Verify no storage before opt-in, pause/note/reload/explicit resume, timer capping and delayed ticks, storage failure/reset, and isolation across profiles/tasks. Extend the production browser checks with axe, keyboard navigation, narrow reflow, reduced motion, and forced colours. Record VoiceOver and user-testing gaps in [ACCESSIBILITY.md](ACCESSIBILITY.md); do not imply WCAG certification.
 
 ## Out of scope
 
