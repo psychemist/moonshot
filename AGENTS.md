@@ -9,6 +9,5 @@
 - Preserve existing user edits. Never publish `prompts/`, `.env` files, dependencies, build output, local `.vercel/` metadata, or test artifacts.
 - Run meaningful tests for changed behavior, `npm run typecheck`, and `npm run build`. Run production browser checks for UI/auth changes; verify accessibility in both themes and preserve offline guest planning.
 - Update README, product/spec documentation, and demo claims when behavior changes. Distinguish automated checks from manual assistive-technology and real-user validation.
-- Preserve the 7 October 2026 planning date, 8–14 October build schedule, and 28–29 October Lagos showcase dates. Record actual verification separately.
 - Deployment is to the existing `idea-lab/moonshot` Vercel project. Use a direct production deployment when requested; do not create an ongoing GitHub deployment integration without explicit authorization.
 - When publishing under the user's per-file commit instruction, commit only intended deliverables individually and keep `prompts/` absent from published history.
