@@ -16,7 +16,7 @@ export function createLearningGraphServer() {
   if (issues.length) throw new Error(`Invalid learning path: ${issues.join(" ")}`);
 
   const server = new McpServer({ name: "learning-graph", version: "0.2.0" }, {
-    instructions: "Learning Graph provides one curated assembler-in-C roadmap. Use list_learning_goals before planning. Plans and resources are authoritative for this catalog; do not invent prerequisites or claim mastery. Prior knowledge is self-reported. Tools are read-only: no progress is saved, no learner code runs, and no external resource is fetched. The assistant supplies coaching; this server contains no model.",
+    instructions: "Learning Graph provides one curated assembler-in-C roadmap. Use list_learning_goals before planning. Plans and resources are authoritative for this catalog; do not invent prerequisites or claim mastery. Prior knowledge is self-reported. Task startingAction and practiceSteps support getting started and transitioning. Tools are read-only: no progress is saved, no learner code runs, and no external resource is fetched. The website's optional device-saved practice sessions cannot be accessed by these tools. The assistant supplies coaching; this server contains no model.",
   });
 
   server.registerTool("list_learning_goals", {
@@ -32,7 +32,7 @@ export function createLearningGraphServer() {
   }));
 
   server.registerTool("generate_learning_plan", {
-    description: "Generate a next-task plan using the same deterministic planner as the website. weekly_hours is the learner's weekly budget, not a single-session length. Prior knowledge is self-reported. Returns roadmap, exercise, expected output, provisional estimate, source, explanation, allocation, and remaining time. Unsupported goals return an error; nothing is persisted.",
+    description: "Generate a next-task plan using the same deterministic planner as the website. weekly_hours is the learner's weekly budget, not a single-session length. Prior knowledge is self-reported. Returns roadmap, exercise, startingAction, ordered practiceSteps, expected output, provisional estimate, source, explanation, allocation, and remaining time. Unsupported goals return an error; nothing is persisted and no browser session can be read.",
     inputSchema: z.strictObject({
       goal: z.string().trim().min(1),
       prior_knowledge: z.array(z.enum(knowledgeIds)),
