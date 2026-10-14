@@ -19,6 +19,12 @@ export function validateLearningPath(path: LearningPath): string[] {
     if (!nodeIds.has(edge.from) || !nodeIds.has(edge.to)) issues.push("Unknown edge endpoint.");
   }
   for (const task of path.tasks) {
+    if (!task.startingAction?.trim() || !Array.isArray(task.practiceSteps) ||
+      task.practiceSteps.length < 3 || task.practiceSteps.length > 5 ||
+      task.practiceSteps.some((step) => !step.id?.trim() || !step.action?.trim()) ||
+      new Set(task.practiceSteps.map((step) => step.id)).size !== task.practiceSteps.length) {
+      issues.push("Each task needs a starting action and three to five distinct practice steps.");
+    }
     if (!path.nodes.some((node) => node.id === task.conceptId)) {
       issues.push("Unknown task concept.");
     }
