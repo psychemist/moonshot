@@ -13,4 +13,6 @@
 
 **The demo's wow moment.** Enter “build an assembler in C,” see the map and first task, then change prior C knowledge to change the recommendation. A connected coach can request the same plan conversationally, grounded in the planner's budget and sources.
 
-**Next and out of scope.** Saved progress, reminders, and complete weekly scheduling are next. Universal curricula, automated mastery assessment, course generation, social features, accounts, hardware projects, and unrestricted tutoring are outside this prototype.
+**Access.** Guests can explore freely; optional seeded SQLite sign-in and light/dark themes are available.
+
+**Next and out of scope.** Saved progress, reminders, and complete weekly scheduling are next. Universal curricula, automated mastery assessment, course generation, social features, registration, hardware projects, and unrestricted tutoring are outside this prototype.
